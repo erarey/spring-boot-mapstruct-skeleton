@@ -26,7 +26,7 @@ public class Tag {
 	Long lastUsed;
 	
 	@ManyToMany // or @ManyToOne?
-	Set<Tweet> tweetsWithThisTag;
+	Set<Tweet> tweetsWithThisTag; //sortedSet?
 
 	Tag(){}
 	

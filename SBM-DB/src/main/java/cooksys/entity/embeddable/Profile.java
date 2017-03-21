@@ -1,4 +1,4 @@
-package entity.embeddable;
+package cooksys.entity.embeddable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.OneToOne;
