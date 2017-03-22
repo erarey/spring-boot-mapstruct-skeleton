@@ -15,16 +15,14 @@ public class Tweet {
 	
 	@NotNull
 	@ManyToOne
-	private User author;
+	private Uzer author;
 	
 	private Long posted;
 	
 	String content;
 	
-	@OneToOne
 	Tweet inReplyTo;
 	
-	@OneToOne
 	Tweet repostOf;
 	
 	//Set<User> mentions
@@ -37,11 +35,11 @@ public class Tweet {
 		this.id = id;
 	}
 
-	public User getAuthor() {
+	public Uzer getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(Uzer author) {
 		this.author = author;
 	}
 

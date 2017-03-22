@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import cooksys.entity.embeddable.Profile;
 
 @Entity
-public class User {
+public class Uzer {
 	
 	@Id
 	@GeneratedValue
@@ -30,10 +30,10 @@ public class User {
 	//Set<Tweet> mentionedIn;
 	
 	@ManyToMany
-	Set<User> following;
+	Set<Uzer> following;
 	
 	@ManyToMany
-	Set<User> followers;
+	Set<Uzer> followers;
 	
 	public Set<Tweet> getTweets() {
 		return tweets;
@@ -51,19 +51,19 @@ public class User {
 		this.mentionedIn = mentionedIn;
 	}
 	 */
-	public Set<User> getFollowing() {
+	public Set<Uzer> getFollowing() {
 		return following;
 	}
 
-	public void setFollowing(Set<User> following) {
+	public void setFollowing(Set<Uzer> following) {
 		this.following = following;
 	}
 
-	public Set<User> getFollowers() {
+	public Set<Uzer> getFollowers() {
 		return followers;
 	}
 
-	public void setFollowers(Set<User> followers) {
+	public void setFollowers(Set<Uzer> followers) {
 		this.followers = followers;
 	}
 
@@ -107,7 +107,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Uzer other = (Uzer) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
