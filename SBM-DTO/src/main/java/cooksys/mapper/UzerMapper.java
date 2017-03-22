@@ -1,5 +1,5 @@
 package cooksys.mapper;
 
-public class UserMapper {
+public class UzerMapper {
 
 }

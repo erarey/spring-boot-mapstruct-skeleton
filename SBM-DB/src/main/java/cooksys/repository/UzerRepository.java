@@ -1,5 +1,5 @@
 package cooksys.repository;
 
-public class UserRepository {
+public class UzerRepository {
 
 }

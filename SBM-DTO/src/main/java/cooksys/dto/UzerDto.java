@@ -1,5 +1,5 @@
 package cooksys.dto;
 
-public class UserDto {
+public class UzerDto {
 
 }

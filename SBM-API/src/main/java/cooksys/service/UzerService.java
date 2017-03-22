@@ -1,5 +1,5 @@
 package cooksys.service;
 
-public class UserService {
+public class UzerService {
 
 }
