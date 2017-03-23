@@ -1,27 +1,39 @@
 package cooksys.dto;
 
+import java.sql.Timestamp;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+//import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import cooksys.entity.Tweet;
 import cooksys.entity.Uzer;
+//import net.minidev.json.annotate.JsonIgnore;
 
-public class TweetDto {
-
+public class TweetDto implements DtoMarker{
+	//@Transient
+	//@JsonIgnore
+	//private String serverComm;
+	
 	private Long id;
 	
 	private Uzer author;
 	
 	private Long posted;
-	
+
 	private String content;
 	
 	private Tweet inReplyTo;
 	
 	private Tweet repostOf;
-
+	
+	public TweetDto(){}
+	
+	public TweetDto(String serverComm)
+	{this.content = serverComm; this.id = null;}
+	
 	public Long getId() {
 		return id;
 	}

@@ -1,15 +1,25 @@
 package cooksys.dto;
 
+//import javax.persistence.Transient;
+
 import cooksys.entity.embeddable.Profile;
+//import net.minidev.json.annotate.JsonIgnore;
 
 //import cooksys.entity.embeddable.Credentials;
 
-public class UzerDto {
-
+public class UzerDto implements DtoMarker {
+	//@Transient
+	//@JsonIgnore
+	//private String serverComm;
+	
 	private String username;
 	
 	private Profile profile;
-
+	
+	public UzerDto(){}
+	
+	public UzerDto(String serverComm){this.username = serverComm; this.username = null;}
+	
 	public String getUsername() {
 		return username;
 	}

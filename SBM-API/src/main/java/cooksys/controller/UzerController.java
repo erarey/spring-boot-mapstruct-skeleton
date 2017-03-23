@@ -64,7 +64,7 @@ public class UzerController {
 	@GetMapping("@{username}")
 	public UzerDto getByUsername(@PathVariable String username, HttpServletResponse response)
 	{
-		if (username != null && has(username))
+		if (username != null)
 			return uzerService.getByUsername(username);
 		else
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -72,10 +72,11 @@ public class UzerController {
 		return null;
 	}
 	
-	private boolean has(String username) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	//private boolean has(String username) {
+		//if (getByUsername(username) == null) return true;
+		
+		//else return true;
+	//}
 
 	@PostMapping //users
 	public UzerDto post(@RequestBody UzerPatchWrapperDto dto, HttpServletResponse response)
@@ -101,14 +102,9 @@ public class UzerController {
 	}
 	
 	@DeleteMapping("@{username}")
-	public UzerDto delete(@PathVariable String username)
-	{
-		if (!has(username))
-		{
-			
-		}
-		
-		return uzerService.delete(username);
+	public UzerDto delete(@PathVariable String username, @RequestBody @Validated Credentials creds, HttpServletResponse response)
+	{	
+		return uzerService.delete(username, creds);
 	}
 	
 	@PostMapping("@{username}/follow")

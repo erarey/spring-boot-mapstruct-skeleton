@@ -42,8 +42,27 @@ public class Uzer {
 	@ManyToMany
 	Set<Uzer> following;
 	
-	@ManyToMany
-	Set<Uzer> followers;
+	//@ManyToMany
+	//Set<Uzer> followers;
+	
+	public boolean follow(Uzer uzer)
+	{
+		if (following.contains(uzer)) return false;
+		
+		following.add(uzer);
+		
+		return true;
+	}
+	
+	public boolean unfollow(Uzer uzer)
+	{
+		if (following.contains(uzer)) return false;
+		
+		following.add(uzer);
+		
+		return true;
+	}
+	
 	
 	public Set<Tweet> getTweets() {
 		return tweets;
@@ -67,14 +86,6 @@ public class Uzer {
 
 	public void setFollowing(Set<Uzer> following) {
 		this.following = following;
-	}
-
-	public Set<Uzer> getFollowers() {
-		return followers;
-	}
-
-	public void setFollowers(Set<Uzer> followers) {
-		this.followers = followers;
 	}
 
 	public Long getId() {

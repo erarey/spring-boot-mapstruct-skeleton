@@ -3,6 +3,7 @@ package cooksys.entity;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,8 +27,9 @@ public class Hashtag {
 	Long lastUsed;
 	
 	//@ManyToMany // or @ManyToOne?
-	@ManyToMany(mappedBy = "hashtagsInThisTweet")
-	Set<Tweet> tweetsWithThisHashtag; //sortedSet?
+	//@ManyToMany(mappedBy = "hashtagsInThisTweet")
+	@ElementCollection
+	Set<Long> tweetsWithThisHashtag;
 
 	//public Hashtag(){}
 	
@@ -60,11 +62,11 @@ public class Hashtag {
 		this.lastUsed = lastUsed;
 	}
 
-	public Set<Tweet> getTweetsWithThisHashtag() {
+	public Set<Long> getTweetsWithThisHashtag() {
 		return tweetsWithThisHashtag;
 	}
 
-	public void setTweetsWithThisTag(Set<Tweet> tweetsWithThisHashtag) {
+	public void setTweetsWithThisTag(Set<Long> tweetsWithThisHashtag) {
 		this.tweetsWithThisHashtag = tweetsWithThisHashtag;
 	}
 	

@@ -1,7 +1,11 @@
 package cooksys.dto;
 
-public class HashtagDto {
-	
+//import javax.persistence.Transient;
+
+//import net.minidev.json.annotate.JsonIgnore;
+
+public class HashtagDto implements DtoMarker {
+
 	Long id;
 	
 	String label;
@@ -9,7 +13,22 @@ public class HashtagDto {
 	Long firstUsed;
 	
 	Long lastUsed;
+	
+	//@Transient
+	//@JsonIgnore
+	private String serverComm;
+	
+	public HashtagDto(){}
+	
+	public HashtagDto(String serverComm){this.label = serverComm; this.id = null;}
+	
+	public String getServerComm() {
+		return serverComm;
+	}
 
+	public void setServerComm(String serverComm) {
+		this.serverComm = serverComm;
+	}
 	public Long getId() {
 		return id;
 	}

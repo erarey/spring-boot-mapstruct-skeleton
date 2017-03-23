@@ -1,7 +1,10 @@
 package cooksys.entity;
 
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,24 +23,33 @@ public class Tweet {
 	@ManyToOne
 	private Uzer author;
 	
-	private Long posted;
+	//private Long posted;
 	
-	String content;
+	private String content;
 	
-	//child
+	private Boolean deleted = false;
+	
+	private Timestamp posted;
+	
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@ManyToOne
 	Tweet inReplyTo;
 	
-	//parent
 	@ManyToOne
 	Tweet repostOf;
 	
-	@ManyToMany
-	Collection<Hashtag> hashtagsInThisTweet;
-	//Set<User> mentions
+	@ElementCollection
+	Set<String> hashtagsInThisTweet;
 
-	@ManyToMany
-	Collection<Uzer> mentionsInThisTweet;
+	@ElementCollection
+	Set<String> mentionsInThisTweet;
 	
 	public Long getId() {
 		return id;
@@ -55,11 +67,11 @@ public class Tweet {
 		this.author = author;
 	}
 
-	public Long getPosted() {
+	public Timestamp getPosted() {
 		return posted;
 	}
 
-	public void setPosted(Long posted) {
+	public void setPosted(Timestamp posted) {
 		this.posted = posted;
 	}
 
@@ -86,20 +98,23 @@ public class Tweet {
 	public void setRepostOf(Tweet repostOf) {
 		this.repostOf = repostOf;
 	}
+	
+	
 
-	public Collection<Hashtag> getHashtagsInThisTweet() {
+
+	public Set<String> getHashtagsInThisTweet() {
 		return hashtagsInThisTweet;
 	}
 
-	public void setHashtagsInThisTweet(Collection<Hashtag> hashtagsInThisTweet) {
+	public void setHashtagsInThisTweet(Set<String> hashtagsInThisTweet) {
 		this.hashtagsInThisTweet = hashtagsInThisTweet;
 	}
 
-	public Collection<Uzer> getMentionsInThisTweet() {
+	public Set<String> getMentionsInThisTweet() {
 		return mentionsInThisTweet;
 	}
 
-	public void setMentionsInThisTweet(Collection<Uzer> mentionsInThisTweet) {
+	public void setMentionsInThisTweet(Set<String> mentionsInThisTweet) {
 		this.mentionsInThisTweet = mentionsInThisTweet;
 	}
 
