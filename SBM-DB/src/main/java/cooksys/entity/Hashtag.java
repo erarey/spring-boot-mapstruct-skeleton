@@ -29,7 +29,7 @@ public class Hashtag {
 	@ManyToMany(mappedBy = "hashtagsInThisTweet")
 	Set<Tweet> tweetsWithThisHashtag; //sortedSet?
 
-	Hashtag(){}
+	public Hashtag(){}
 	
 	public Long getId() {
 		return id;

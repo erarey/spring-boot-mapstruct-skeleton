@@ -24,9 +24,11 @@ public class Tweet {
 	
 	String content;
 	
-	Tweet inReplyTo;
+	//child
+	Long inReplyTo;
 	
-	Tweet repostOf;
+	//parent
+	Long repostOf;
 	
 	@ManyToMany
 	Collection<Hashtag> hashtagsInThisTweet;
@@ -67,19 +69,19 @@ public class Tweet {
 		this.content = content;
 	}
 
-	public Tweet getInReplyTo() {
+	public Long getInReplyTo() {
 		return inReplyTo;
 	}
 
-	public void setInReplyTo(Tweet inReplyTo) {
+	public void setInReplyTo(Long inReplyTo) {
 		this.inReplyTo = inReplyTo;
 	}
 
-	public Tweet getRepostOf() {
+	public Long getRepostOf() {
 		return repostOf;
 	}
 
-	public void setRepostOf(Tweet repostOf) {
+	public void setRepostOf(Long repostOf) {
 		this.repostOf = repostOf;
 	}
 
