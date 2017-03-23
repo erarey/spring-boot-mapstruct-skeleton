@@ -1,8 +1,14 @@
 package cooksys.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UzerRepository {
+import cooksys.entity.Hashtag;
+import cooksys.entity.Uzer;
 
+@Repository
+public interface UzerRepository extends JpaRepository<Uzer, Long>{
+	Uzer findByUsername(String username);
+	
+	Uzer findByProfileEmail(String email);
 }

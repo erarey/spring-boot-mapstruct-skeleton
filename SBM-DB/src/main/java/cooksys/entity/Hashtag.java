@@ -18,7 +18,7 @@ public class Hashtag {
 	Long id;
 	
 	@NotNull
-	String label;
+	String labeld;
 	
 	@NotNull
 	Long firstUsed;
@@ -29,7 +29,7 @@ public class Hashtag {
 	@ManyToMany(mappedBy = "hashtagsInThisTweet")
 	Set<Tweet> tweetsWithThisHashtag; //sortedSet?
 
-	public Hashtag(){}
+	//public Hashtag(){}
 	
 	public Long getId() {
 		return id;
@@ -40,11 +40,11 @@ public class Hashtag {
 	}
 
 	public String getLabel() {
-		return label;
+		return labeld;
 	}
 
 	public void setLabel(String label) {
-		this.label = label;
+		this.labeld = label;
 	}
 
 	public Long getLastUsed() {

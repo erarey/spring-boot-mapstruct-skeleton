@@ -1,8 +1,10 @@
 package cooksys.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,6 +25,8 @@ import cooksys.dto.TweetDto;
 import cooksys.dto.UzerDto;
 import cooksys.dto.UzerPatchWrapperDto;
 import cooksys.entity.Uzer;
+import cooksys.entity.embeddable.Credentials;
+import cooksys.entity.embeddable.Profile;
 import cooksys.service.UzerService;
 
 @RestController
@@ -41,6 +45,7 @@ public class UzerController {
 	
 	@GetMapping
 	public List<UzerDto> index() {
+		System.out.println("trying to return all users");
 		return uzerService.index();
 	}
 	
@@ -73,7 +78,7 @@ public class UzerController {
 	}
 
 	@PostMapping //users
-	public UzerDto post(@RequestBody UzerDto dto, HttpServletResponse response)
+	public UzerDto post(@RequestBody UzerPatchWrapperDto dto, HttpServletResponse response)
 	{
 		if (dto == null)
 		{
@@ -87,10 +92,10 @@ public class UzerController {
 	@PatchMapping("@{username}")
 	public UzerDto patch(@PathVariable String username, @RequestBody @Validated UzerPatchWrapperDto patch, HttpServletResponse response)
 	{
-		if (!has(username))
-		{
+		//if (!has(username))
+		//{
 			
-		}
+		//}
 		
 		return uzerService.patch(username, patch);
 	}

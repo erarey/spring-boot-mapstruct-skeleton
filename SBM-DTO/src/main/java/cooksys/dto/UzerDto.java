@@ -6,16 +6,16 @@ import cooksys.entity.embeddable.Profile;
 
 public class UzerDto {
 
-	private String Username;
+	private String username;
 	
 	private Profile profile;
 
 	public String getUsername() {
-		return Username;
+		return username;
 	}
 
 	public void setUsername(String username) {
-		Username = username;
+		this.username = username;
 	}
 
 	public Profile getProfile() {
@@ -30,7 +30,7 @@ public class UzerDto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Username == null) ? 0 : Username.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		result = prime * result + ((profile == null) ? 0 : profile.hashCode());
 		return result;
 	}
@@ -44,10 +44,10 @@ public class UzerDto {
 		if (getClass() != obj.getClass())
 			return false;
 		UzerDto other = (UzerDto) obj;
-		if (Username == null) {
-			if (other.Username != null)
+		if (username == null) {
+			if (other.username != null)
 				return false;
-		} else if (!Username.equals(other.Username))
+		} else if (!username.equals(other.username))
 			return false;
 		if (profile == null) {
 			if (other.profile != null)

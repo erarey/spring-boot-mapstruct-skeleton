@@ -25,10 +25,12 @@ public class Tweet {
 	String content;
 	
 	//child
-	Long inReplyTo;
+	@ManyToOne
+	Tweet inReplyTo;
 	
 	//parent
-	Long repostOf;
+	@ManyToOne
+	Tweet repostOf;
 	
 	@ManyToMany
 	Collection<Hashtag> hashtagsInThisTweet;
@@ -69,20 +71,36 @@ public class Tweet {
 		this.content = content;
 	}
 
-	public Long getInReplyTo() {
+	public Tweet getInReplyTo() {
 		return inReplyTo;
 	}
 
-	public void setInReplyTo(Long inReplyTo) {
+	public void setInReplyTo(Tweet inReplyTo) {
 		this.inReplyTo = inReplyTo;
 	}
 
-	public Long getRepostOf() {
+	public Tweet getRepostOf() {
 		return repostOf;
 	}
 
-	public void setRepostOf(Long repostOf) {
+	public void setRepostOf(Tweet repostOf) {
 		this.repostOf = repostOf;
+	}
+
+	public Collection<Hashtag> getHashtagsInThisTweet() {
+		return hashtagsInThisTweet;
+	}
+
+	public void setHashtagsInThisTweet(Collection<Hashtag> hashtagsInThisTweet) {
+		this.hashtagsInThisTweet = hashtagsInThisTweet;
+	}
+
+	public Collection<Uzer> getMentionsInThisTweet() {
+		return mentionsInThisTweet;
+	}
+
+	public void setMentionsInThisTweet(Collection<Uzer> mentionsInThisTweet) {
+		this.mentionsInThisTweet = mentionsInThisTweet;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class TweetDto {
 	
 	private Long posted;
 	
-	String content;
+	private String content;
 	
 	private Tweet inReplyTo;
 	

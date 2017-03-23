@@ -1,15 +1,20 @@
 package cooksys.entity;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import cooksys.entity.embeddable.Credentials;
 import cooksys.entity.embeddable.Profile;
 
 @Entity
@@ -19,11 +24,16 @@ public class Uzer {
 	@GeneratedValue
 	private Long id;
 	
+	private Credentials credentials;
+	
+	Boolean deleted = false;
+
 	private Profile profile;
 	
-	@NotNull
-	private Long joined;
+	@Column(name = "joined", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private java.sql.Timestamp joined;
 	
+
 	@OneToMany(mappedBy = "author")
 	Set<Tweet> tweets; //= new HashSet<>();
 	
@@ -83,12 +93,28 @@ public class Uzer {
 		this.profile = profile;
 	}
 
-	public Long getJoined() {
+	public Timestamp getJoined() {
 		return joined;
 	}
 
-	public void setJoined(Long joined) {
+	public void setJoined(Timestamp joined) {
 		this.joined = joined;
+	}
+	
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override
