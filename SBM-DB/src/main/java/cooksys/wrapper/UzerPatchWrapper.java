@@ -1,21 +1,22 @@
-package cooksys.dto;
+package cooksys.wrapper;
 
+import org.springframework.stereotype.Component;
+
+import cooksys.entity.embeddable.Credentials;
 import cooksys.entity.embeddable.Profile;
 
-//import cooksys.entity.embeddable.Credentials;
-
-public class UzerDto {
-
-	private String Username;
+@Component
+public class UzerPatchWrapper {
+	private Credentials creds;
 	
 	private Profile profile;
 
-	public String getUsername() {
-		return Username;
+	public Credentials getCreds() {
+		return creds;
 	}
 
-	public void setUsername(String username) {
-		Username = username;
+	public void setCreds(Credentials creds) {
+		this.creds = creds;
 	}
 
 	public Profile getProfile() {
@@ -30,7 +31,7 @@ public class UzerDto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Username == null) ? 0 : Username.hashCode());
+		result = prime * result + ((creds == null) ? 0 : creds.hashCode());
 		result = prime * result + ((profile == null) ? 0 : profile.hashCode());
 		return result;
 	}
@@ -43,11 +44,11 @@ public class UzerDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UzerDto other = (UzerDto) obj;
-		if (Username == null) {
-			if (other.Username != null)
+		UzerPatchWrapper other = (UzerPatchWrapper) obj;
+		if (creds == null) {
+			if (other.creds != null)
 				return false;
-		} else if (!Username.equals(other.Username))
+		} else if (!creds.equals(other.creds))
 			return false;
 		if (profile == null) {
 			if (other.profile != null)
@@ -56,5 +57,6 @@ public class UzerDto {
 			return false;
 		return true;
 	}
+	
 	
 }

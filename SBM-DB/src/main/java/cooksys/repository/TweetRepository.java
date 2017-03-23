@@ -1,5 +1,8 @@
 package cooksys.repository;
 
-public class TweetRepository {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TweetRepository {
 
 }

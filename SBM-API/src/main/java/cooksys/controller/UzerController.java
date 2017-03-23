@@ -1,5 +1,7 @@
 package cooksys.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cooksys.dto.CredentialsDto;
+import cooksys.dto.TweetDto;
 import cooksys.dto.UzerDto;
 import cooksys.dto.UzerPatchWrapperDto;
 import cooksys.entity.Uzer;
@@ -63,8 +67,13 @@ public class UzerController {
 		return null;
 	}
 	
+	private boolean has(String username) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 	@PostMapping //users
-	public UserDto post(@RequestBody UzerDto dto, HttpServletResponse response)
+	public UzerDto post(@RequestBody UzerDto dto, HttpServletResponse response)
 	{
 		if (dto == null)
 		{
@@ -76,14 +85,14 @@ public class UzerController {
 	}
 	
 	@PatchMapping("@{username}")
-	public UzerDto patch(@PathVariable String username, @RequestBody @Validated UserPatchWrapperDto patch, HttpServletResponse response)
+	public UzerDto patch(@PathVariable String username, @RequestBody @Validated UzerPatchWrapperDto patch, HttpServletResponse response)
 	{
 		if (!has(username))
 		{
 			
 		}
 		
-		userService.patch(username, patch);
+		return uzerService.patch(username, patch);
 	}
 	
 	@DeleteMapping("@{username}")
@@ -94,24 +103,84 @@ public class UzerController {
 			
 		}
 		
-		String responseString = uzerService.delete(username);
+		return uzerService.delete(username);
 	}
 	
 	@PostMapping("@{username}/follow")
-	public ResponseEntity follow(@PathVariable String username, @RequestBody @Validated CredentialsDto cred, HttpServletResponse response)
+	public String follow(@PathVariable String username, @RequestBody @Validated CredentialsDto cred, HttpServletResponse response)
 	{
-		//why does Eclipse think follow and unfollow are known methods 
-		//before they were even created?
-		String responseString = uzerService.follow(username, cred);
+		return uzerService.follow(username, cred);
 		
 	}
 	
 	@PostMapping("@{username}/unfollow")
-	public ResponseEntity follow(@PathVariable String username, @RequestBody @Validated CredentialsDto cred, HttpServletResponse response)
+	public String unfollow(@PathVariable String username, @RequestBody @Validated CredentialsDto cred, HttpServletResponse response)
 	{
-		String responseString = uzerService.unfollow(username, cred);
+		return uzerService.unfollow(username, cred);
 		
 	}
+	
+	@GetMapping("@{username}/feed")
+	public List<TweetDto> getFeed(@PathVariable String username, HttpServletResponse response)
+	{
+		if (username == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return new ArrayList<TweetDto>();
+		}
+		
+		return uzerService.getFeed(username);
+	}
+	
+	@GetMapping("@{username}/tweets")
+	public List<TweetDto> getTweets(@PathVariable String username, HttpServletResponse response)
+	{
+		if (username == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return new ArrayList<TweetDto>();
+		}
+		
+		return uzerService.getTweets(username);
+	}
+	
+	@GetMapping("@{username}/followers")
+	public List<UzerDto> getFollowers(@PathVariable String username, HttpServletResponse response)
+	{
+		if (username == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return new ArrayList<UzerDto>();
+		}
+		
+		return uzerService.getFollowers(username);
+	}
+	
+	@GetMapping("@{username}/following")
+	public List<UzerDto> getFollowing(@PathVariable String username, HttpServletResponse response)
+	{
+		if (username == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return new ArrayList<UzerDto>();
+		}
+		
+		return uzerService.getFollowing(username);
+	}
+	
+	@GetMapping("@{username}/mentions")
+	public List<TweetDto> getMentions(@PathVariable String username, HttpServletResponse response)
+	{
+		if (username == null)
+		{
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return new ArrayList<TweetDto>();
+		}
+		
+		return uzerService.getMentions(username);
+	}
+	
+	
 	
 	
 }

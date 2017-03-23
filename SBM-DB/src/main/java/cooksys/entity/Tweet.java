@@ -1,8 +1,11 @@
 package cooksys.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -25,8 +28,13 @@ public class Tweet {
 	
 	Tweet repostOf;
 	
+	@ManyToMany
+	Collection<Hashtag> hashtagsInThisTweet;
 	//Set<User> mentions
 
+	@ManyToMany
+	Collection<Uzer> mentionsInThisTweet;
+	
 	public Long getId() {
 		return id;
 	}

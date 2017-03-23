@@ -10,7 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Tag {
+public class Hashtag {
 	//list of tweets where used?
 	
 	@Id
@@ -25,10 +25,11 @@ public class Tag {
 	
 	Long lastUsed;
 	
-	@ManyToMany // or @ManyToOne?
-	Set<Tweet> tweetsWithThisTag; //sortedSet?
+	//@ManyToMany // or @ManyToOne?
+	@ManyToMany(mappedBy = "hashtagsInThisTweet")
+	Set<Tweet> tweetsWithThisHashtag; //sortedSet?
 
-	Tag(){}
+	Hashtag(){}
 	
 	public Long getId() {
 		return id;
@@ -59,12 +60,12 @@ public class Tag {
 		this.lastUsed = lastUsed;
 	}
 
-	public Set<Tweet> getTweetsWithThisTag() {
-		return tweetsWithThisTag;
+	public Set<Tweet> getTweetsWithThisHashtag() {
+		return tweetsWithThisHashtag;
 	}
 
-	public void setTweetsWithThisTag(Set<Tweet> tweetsWithThisTag) {
-		this.tweetsWithThisTag = tweetsWithThisTag;
+	public void setTweetsWithThisTag(Set<Tweet> tweetsWithThisHashtag) {
+		this.tweetsWithThisHashtag = tweetsWithThisHashtag;
 	}
 	
 	
