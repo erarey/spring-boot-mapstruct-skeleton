@@ -8,7 +8,7 @@ import cooksys.entity.Uzer;
 
 @Repository
 public interface UzerRepository extends JpaRepository<Uzer, Long>{
-	Uzer findByUsername(String username);
+	Uzer findByCredentialsUsername(String username);
 	
 	Uzer findByProfileEmail(String email);
 }

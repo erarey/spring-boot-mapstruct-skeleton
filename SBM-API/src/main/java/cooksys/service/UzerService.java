@@ -1,5 +1,7 @@
 package cooksys.service;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,51 +40,76 @@ public class UzerService {
 	}
 
 	public boolean exists(String username) {
-		// TODO Auto-generated method stub
-		return false;
+		Uzer uzer = uzerRepository.findByCredentialsUsername(username);
+		
+		if (uzer == null || uzer.getDeleted() == true) return false;
+		
+		return true;
 	}
 
 	public boolean available(String username) {
-		// TODO Auto-generated method stub
+		Uzer uzer = uzerRepository.findByCredentialsUsername(username);
+		
+		if (uzer == null) return true;
+		
 		return false;
 	}
 
 	public UzerDto getByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return uzerMapper.toUzerDto(uzerRepository.findByCredentialsUsername(username));
 	}
 
 	public UzerDto post(UzerPatchWrapperDto dto) {
-		//Manual mapper
-		Uzer newUzer = new Uzer();
-		System.out.println("username from dto " + dto.getCreds().getUsername());
-		System.out.println(dto.getCreds().getPassword());
+		//check if username is available
 		
-		newUzer.setUsername(new String(dto.getCreds().getUsername()));
-		newUzer.setPassword(new String(dto.getCreds().getPassword()));
-		
-		System.out.println(newUzer.getUsername());
-		
-		newUzer.setProfile(new Profile(dto.getProfile()));
+		Uzer newUzer = uzerMapper.toNewUzer(dto.getProfile(), dto.getCreds());
 		
 		Uzer result = uzerRepository.save(newUzer);
+		
+		result = uzerRepository.findByCredentialsUsername(result.getCredentials().getUsername());
 		
 		System.out.println("new user's timestamp was: " + result.getJoined());
 		//if it was successful, return the Dto of the user just created.
 		
 		UzerDto dto2 = uzerMapper.toUzerDto(result);
 		
-		System.out.println(dto2.getUsername());
+		System.out.println("new user dto's username ultimately was: " + dto2.getUsername());
+		
+		return dto2;
 	}
 
 	public UzerDto patch(String username, UzerPatchWrapperDto patch) {
-		// TODO Auto-generated method stub
-		return null;
+		if (username != patch.getCreds().getUsername())
+		{
+			return null;
+		}
+		
+		//if creds are invalid return null;
+		
+		Uzer uzer = uzerRepository.findByCredentialsUsername(username);
+		Profile profile = new Profile(patch.getProfile());
+		Profile patchedP = uzer.getProfile();
+		if (profile.getEmail() != null) patchedP.setEmail(profile.getEmail());
+		if (profile.getFirstName() != null) patchedP.setFirstName(profile.getFirstName());
+		if (profile.getLastName() != null) patchedP.setLastName(profile.getLastName());
+		if (profile.getPhone() != null) patchedP.setPhone(profile.getPhone());
+		
+		uzer.setProfile(patchedP);
+		
+		uzerRepository.save(uzer);
+		
+		return uzerMapper.toUzerDto(uzerRepository.findByCredentialsUsername(username));
 	}
 
 	public UzerDto delete(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		Uzer uzer = uzerRepository.findByCredentialsUsername(username);
+		if (uzer.getDeleted() == true) return null; //return some error, already deleted
+		
+		uzer.setDeleted(true);
+		
+		uzerRepository.save(uzer);
+		
+		return uzerMapper.toUzerDto(uzer);
 	}
 
 	public String follow(String username, CredentialsDto cred) {

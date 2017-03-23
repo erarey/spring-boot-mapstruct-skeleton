@@ -3,16 +3,19 @@ package cooksys.mapper;
 import java.sql.Timestamp;
 
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 import cooksys.dto.UzerDto;
 import cooksys.entity.Uzer;
 import cooksys.entity.embeddable.Credentials;
+import cooksys.entity.embeddable.Profile;
 
-@Mapper(componentModel = "spring") //uses ...
-public interface UzerMapper {
+//@Mapper(componentModel = "spring") //uses ...
+@Component
+public class UzerMapper {
 	
 	
-	default public Uzer toUzer(UzerDto uzerDto, Credentials credentials, Timestamp joined)
+	public Uzer toUzer(UzerDto uzerDto, Credentials credentials, Timestamp joined)
 	{
 		//if credentials are valid
 		Uzer uzer = new Uzer();
@@ -23,8 +26,18 @@ public interface UzerMapper {
 		return uzer;
 	}
 	
+	public Uzer toNewUzer(Profile profile, Credentials credentials)
+	{
+		//if credentials are valid
+		Uzer uzer = new Uzer();
+		uzer.setCredentials(credentials);
+		uzer.setProfile(profile);
+		
+		return uzer;
+	}
 	
-	default public UzerDto toUzerDto(Uzer uzer)
+	
+	public UzerDto toUzerDto(Uzer uzer)
 	{
 		UzerDto dto = new UzerDto();
 		dto.setUsername(uzer.getCredentials().getUsername());
