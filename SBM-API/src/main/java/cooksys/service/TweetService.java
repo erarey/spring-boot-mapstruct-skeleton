@@ -47,7 +47,9 @@ public class TweetService {
 			"There is no active account matching those credentials at this site. Who are you really?");
 	private final String ALREADYDELETED = new String("It was already deleted!");
 	private final String TWEETDOESNOTEXIST = new String("We were paying attention, but we just couldn't find that tweet!");
-
+	private final String TWEETALREADYDELETED = new String("What are you talking about? That tweet is deleted.");
+	
+	
 	private TweetRepository tweetRepository;
 	private UzerRepository uzerRepository;
 	private UzerMapper uzerMapper;
@@ -92,58 +94,95 @@ public class TweetService {
 		//TODO
 		return new HashSet<Uzer>();
 	}
+	public TweetDto post(TweetWrapperDto wrapper)
+	{
+		return postWithReplyTo(wrapper, null);
+	}
 	
-	public TweetDto post(TweetWrapperDto wrapper) {
+	public TweetDto postWithReplyTo(TweetWrapperDto wrapper, Long id) {
 		if (ValidCreds(wrapper.getCreds()) == false)
 		{
 			return new TweetDto(INVALIDCREDS);
 		}
 		
-		Set<Hashtag> hashtags = parseForHashtags(wrapper.getContent());
+		Tweet replyTo = null;
 		
-		Set<Uzer> mentions = parseForMentions(wrapper.getContent());
-		
-		Set<String> mentionsStrings = new HashSet<String>();
-		
-		for (Uzer u : mentions)
+		if (id != null)
 		{
-			mentionsStrings.add(u.getCredentials().getUsername());
-		}
-		
-		Set<String> hashtagsStrings = new HashSet<String>();
-		
-		for (Hashtag h : hashtags)
-		{
-			hashtagsStrings.add(h.getLabel());
+			replyTo = tweetRepository.findById(id);
+			if (replyTo == null) return new TweetDto(TWEETDOESNOTEXIST);
 		}
 		
 		TweetDto newDto = new TweetDto();
+		
 		newDto.setAuthor(uzerRepository.findByCredentialsUsername(wrapper.getCreds().getUsername()));
-		newDto.setContent(wrapper.getContent());
+		
+		Set<String> hashtagsStrings = new HashSet<String>();
+		
+		Set<String> mentionsStrings = new HashSet<String>();
+		
+		if (wrapper.getContent() == null) //must be a repost
+		{
+			
+		}
+		else // has content
+		{
+			Set<Hashtag> hashtags = parseForHashtags(wrapper.getContent());
+		
+			Set<Uzer> mentions = parseForMentions(wrapper.getContent());
+		
+			for (Uzer u : mentions)
+			{
+				mentionsStrings.add(u.getCredentials().getUsername());
+			}
+		
+			for (Hashtag h : hashtags)
+			{
+				hashtagsStrings.add(h.getLabel());
+			}
+		
+			newDto.setContent(wrapper.getContent());
+		
+		}
+		
+		if (replyTo != null) newDto.setInReplyTo(replyTo);
 		
 		Tweet result = tweetRepository.save(tweetMapper.toNewTweet(newDto, hashtagsStrings, mentionsStrings));
 		Uzer uzerToUpdate = newDto.getAuthor();
 		uzerToUpdate.addTweet(result);
 		
-		uzerRepository.save(uzerToUpdate);
 		//sadly this will not return timestamp, nor the correct id
 		
 		return newDto;
 	}
 
 	public TweetDto getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Tweet t = tweetRepository.findById(id);
+		
+		if (t == null) return new TweetDto(TWEETDOESNOTEXIST);
+		if (t.getDeleted() == true) return new TweetDto(TWEETALREADYDELETED);
+		
+		else return tweetMapper.toTweetDto(tweetRepository.findById(id));
 	}
 
 	public TweetDto delete(Long id, Credentials creds) {
-		// TODO Auto-generated method stub
-		return null;
+		if (ValidCreds(creds) == false) return new TweetDto(INVALIDCREDS);
+		
+		Tweet t = tweetRepository.findById(id);
+		
+		if (t.getDeleted() == true)
+			return new TweetDto(TWEETALREADYDELETED);
+		
+		if (t.getAuthor().equals(creds.getUsername()))
+		{
+			t.setDeleted(true);
+		}
+		
+		return tweetMapper.toTweetDto(t);
 	}
 
 	public TweetDto reply(Long id, TweetWrapperDto wrapper) {
-		// TODO Auto-generated method stub
-		return null;
+		return postWithReplyTo(wrapper, id);
 	}
 
 	public String like(Long id, Credentials creds) {
@@ -152,8 +191,12 @@ public class TweetService {
 	}
 
 	public TweetDto repost(Long id, Credentials creds) {
-		// TODO Auto-generated method stub
-		return null;
+		TweetWrapperDto newWrapper = new TweetWrapperDto();
+		
+		newWrapper.setContent(null);
+		newWrapper.setCreds(creds);
+		
+		return postWithReplyTo(newWrapper, id);
 	}
 
 	public List<Hashtag> getTags(Long id) {
