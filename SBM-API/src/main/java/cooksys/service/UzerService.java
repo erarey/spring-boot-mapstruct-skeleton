@@ -127,9 +127,9 @@ public class UzerService {
 
 		uzer.setProfile(patchedP);
 
-		uzerRepository.save(uzer);
+		//uzerRepository.save(uzer);
 
-		return uzerMapper.toUzerDto(uzerRepository.findByCredentialsUsername(username));
+		return uzerMapper.toUzerDto(uzer);
 	}
 
 	public UzerDto delete(String username, Credentials credentialsDto) {

@@ -86,6 +86,17 @@ public class TweetService {
 	
 	private Set<Hashtag> parseForHashtags(String s)
 	{
+		/*
+		String toParse = new String(s);
+		
+		toParse += "#";
+		List<String> tagsFound;
+		
+		while (toParse.contains("#") && toParse != "")
+		{
+			toParse.split
+		}
+		*/
 		//TODO
 		return new HashSet<Hashtag>();
 	}
@@ -95,6 +106,7 @@ public class TweetService {
 		//TODO
 		return new HashSet<Uzer>();
 	}
+	
 	public TweetDto post(TweetWrapperDto wrapper)
 	{
 		return postWithReplyTo(wrapper, null);
