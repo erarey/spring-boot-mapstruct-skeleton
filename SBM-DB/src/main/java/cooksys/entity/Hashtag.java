@@ -60,6 +60,11 @@ public class Hashtag {
 		if (this.firstUsed == null && firstUsed != null) 
 			this.firstUsed = firstUsed; 
 	}
+	
+	public Timestamp getFirstUsed()
+	{
+		return firstUsed;
+	}
 	public void setLastUsed(Timestamp lastUsed) {
 		this.lastUsed = lastUsed;
 	}
