@@ -1,12 +1,12 @@
 package cooksys.dto;
 
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.Id;
+//import javax.persistence.ManyToOne;
 //import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import cooksys.entity.Tweet;
 import cooksys.entity.Uzer;
