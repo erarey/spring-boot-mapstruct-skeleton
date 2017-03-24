@@ -6,37 +6,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cooksys.service.HashtagService;
+import cooksys.service.TweetService;
+import cooksys.service.UzerService;
+
 @RestController
 //@Validated
 @RequestMapping("validate")
 public class ValidateController {
 	
-	//private 
+	private UzerService uzerService;
+	private TweetService tweetService;
+	private HashtagService tagService;
 	
-	ValidateController()
+	ValidateController(UzerService uzerService, TweetService tweetService, HashtagService tagService)
 	{
-		
+		super();
+		this.uzerService = uzerService;
+		this.tweetService = tweetService;
+		this.tagService = tagService;
 		
 	}
 	
 	@GetMapping("tag/exists/{label}")
-	@ResponseBody
 	public Boolean tagExists(@PathVariable String label)
 	{
-		return true;
+		return tagService.exists(label);
 	}
 	
 	@GetMapping("username/exists/@{username}")
-	@ResponseBody
 	public Boolean usernameExists(@PathVariable String username)
 	{
-		return true;
+		return uzerService.exists(username);
 	}
 	
 	@GetMapping("username/available/@{username}")
-	@ResponseBody
 	public Boolean usernameAvailable(@PathVariable String username)
 	{
-		return true;
+		return uzerService.available(username);
 	}
 }

@@ -1,8 +1,10 @@
 package cooksys.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,10 +23,10 @@ public class Hashtag {
 	@NotNull
 	String labeld;
 	
-	@NotNull
-	Long firstUsed;
+	@Column(name = "joined", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	Timestamp firstUsed;
 	
-	Long lastUsed;
+	Timestamp lastUsed;
 	
 	//@ManyToMany // or @ManyToOne?
 	//@ManyToMany(mappedBy = "hashtagsInThisTweet")
@@ -49,16 +51,16 @@ public class Hashtag {
 		this.labeld = label;
 	}
 
-	public Long getLastUsed() {
+	public Timestamp getLastUsed() {
 		return lastUsed;
 	}
 	
-	public void setFirstUsed(Long firstUsed)
+	public void setFirstUsed(Timestamp firstUsed)
 	{// can only be set once.
 		if (this.firstUsed == null && firstUsed != null) 
 			this.firstUsed = firstUsed; 
 	}
-	public void setLastUsed(Long lastUsed) {
+	public void setLastUsed(Timestamp lastUsed) {
 		this.lastUsed = lastUsed;
 	}
 

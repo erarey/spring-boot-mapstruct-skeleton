@@ -1,5 +1,7 @@
 package cooksys.dto;
 
+import java.sql.Timestamp;
+
 //import javax.persistence.Transient;
 
 //import net.minidev.json.annotate.JsonIgnore;
@@ -10,9 +12,9 @@ public class HashtagDto implements DtoMarker {
 	
 	String label;
 	
-	Long firstUsed;
+	Timestamp firstUsed;
 	
-	Long lastUsed;
+	Timestamp lastUsed;
 	
 	//@Transient
 	//@JsonIgnore
@@ -45,19 +47,19 @@ public class HashtagDto implements DtoMarker {
 		this.label = label;
 	}
 
-	public Long getFirstUsed() {
+	public Timestamp getFirstUsed() {
 		return firstUsed;
 	}
 
-	public void setFirstUsed(Long firstUsed) {
+	public void setFirstUsed(Timestamp firstUsed) {
 		this.firstUsed = firstUsed;
 	}
 
-	public Long getLastUsed() {
+	public Timestamp getLastUsed() {
 		return lastUsed;
 	}
 
-	public void setLastUsed(Long lastUsed) {
+	public void setLastUsed(Timestamp lastUsed) {
 		this.lastUsed = lastUsed;
 	}
 

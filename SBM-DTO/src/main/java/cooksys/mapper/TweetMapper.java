@@ -20,14 +20,15 @@ public class TweetMapper {
 		if (tweetDto == null) return null;
 		
 		Tweet t = new Tweet();
-		t.setId(tweetDto.getId());
+		if (tweetDto.getId() != null) t.setId(tweetDto.getId());
 		t.setAuthor(tweetDto.getAuthor());
-		t.setContent(tweetDto.getContent());
-		t.setDeleted(deleted);
-		t.setHashtagsInThisTweet(hashtags);
-		t.setInReplyTo(tweetDto.getInReplyTo());
-		t.setRepostOf(tweetDto.getRepostOf());
-		t.setPosted(new Timestamp(tweetDto.getPosted()));
+		if (tweetDto.getContent() != null)t.setContent(tweetDto.getContent());
+		if (deleted != null) t.setDeleted(deleted);
+		if (mentions != null) t.setMentionsInThisTweet(mentions);
+		if (hashtags != null) t.setHashtagsInThisTweet(hashtags);
+		if (tweetDto.getInReplyTo() != null) t.setInReplyTo(tweetDto.getInReplyTo());
+		if (tweetDto.getRepostOf() != null) t.setRepostOf(tweetDto.getRepostOf());
+		if (tweetDto.getPosted() != null) t.setPosted(new Timestamp(tweetDto.getPosted()));
 		
 		return t;
 	}

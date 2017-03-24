@@ -1,5 +1,6 @@
 package cooksys.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -200,8 +201,22 @@ public class TweetService {
 	}
 
 	public List<Hashtag> getTags(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Tweet t = tweetRepository.findById(id);
+		if (t == null) return new ArrayList<Hashtag>();
+		
+		Set<String> stringTags = t.getHashtagsInThisTweet();
+		
+		List<Hashtag> hashtags = hashtagRepository.findAll();
+		
+		List<Hashtag> hashtagsIdentified = new ArrayList<>();
+		
+		for (String s : stringTags)
+		{
+			Hashtag h = hashtagRepository.findByLabeld(s);
+			if (h != null) hashtagsIdentified.add(h);
+		}
+		
+		return hashtagsIdentified;
 	}
 
 	public List<Uzer> likes(Long id) {

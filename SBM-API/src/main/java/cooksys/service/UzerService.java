@@ -64,7 +64,7 @@ public class UzerService {
 		this.tweetRepository = tweetRepository;
 		this.hashtagRepository = hashtagRepository;
 		this.hashtagMapper = hashtagMapper;
-
+	}
 	public List<UzerDto> index() {
 		List<UzerDto> dtos = uzerRepository.findAll().stream().map(uzerMapper::toUzerDto).collect(Collectors.toList());
 

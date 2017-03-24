@@ -53,6 +53,7 @@ public class Tweet {
 	@ElementCollection
 	Set<String> mentionsInThisTweet;
 	
+	
 	public Long getId() {
 		return id;
 	}
