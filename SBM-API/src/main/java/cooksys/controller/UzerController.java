@@ -45,7 +45,7 @@ public class UzerController {
 	
 	@GetMapping
 	public List<UzerDto> index() {
-		System.out.println("trying to return all users");
+		//System.out.println("trying to return all users");
 		return uzerService.index();
 	}
 	
