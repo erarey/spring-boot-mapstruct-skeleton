@@ -63,6 +63,10 @@ public class Uzer {
 		return true;
 	}
 	
+	public void addTweet(Tweet t)
+	{
+		tweets.add(t);
+	}
 	
 	public Set<Tweet> getTweets() {
 		return tweets;

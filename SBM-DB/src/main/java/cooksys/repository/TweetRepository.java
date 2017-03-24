@@ -13,4 +13,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long>{
 	
 	Tweet findById(Long id);
 	
+	Tweet findByInReplyTo(Long id);
+	
+	Tweet findByRepostOf(Long id);
+	
 }

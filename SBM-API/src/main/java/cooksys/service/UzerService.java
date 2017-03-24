@@ -13,8 +13,10 @@ import cooksys.entity.Tweet;
 import cooksys.entity.Uzer;
 import cooksys.entity.embeddable.Credentials;
 import cooksys.entity.embeddable.Profile;
+import cooksys.mapper.HashtagMapper;
 import cooksys.mapper.TweetMapper;
 import cooksys.mapper.UzerMapper;
+import cooksys.repository.HashtagRepository;
 import cooksys.repository.TweetRepository;
 import cooksys.repository.UzerRepository;
 import org.springframework.stereotype.Service;
@@ -44,19 +46,24 @@ public class UzerService {
 	private final String ALREADYDELETED = new String("You were already deleted!");
 	private final String ALREADYFOLLOWING = new String("You were already following them!");
 	private final String ALREADYNOTFOLLOWING = new String("You weren't even following them!");
-
+	private final String USERNAMENOTAVAILABLE = new String("Unfortunately someone else is called that, please think of a different username.");
+	
 	private TweetRepository tweetRepository;
 	private UzerRepository uzerRepository;
 	private UzerMapper uzerMapper;
 	private TweetMapper tweetMapper;
-
-	UzerService(UzerMapper uzerMapper, UzerRepository uzerRepository, TweetMapper tweetMapper,
-			TweetRepository tweetRepository) {
+	private HashtagMapper hashtagMapper;
+	private HashtagRepository hashtagRepository;
+	
+	UzerService(TweetMapper tweetMapper, TweetRepository tweetRepository, UzerMapper uzerMapper,
+			UzerRepository uzerRepository, HashtagRepository hashtagRepository, HashtagMapper hashtagMapper) {
 		super();
 		this.uzerMapper = uzerMapper;
 		this.uzerRepository = uzerRepository;
 		this.tweetMapper = tweetMapper;
-	}
+		this.tweetRepository = tweetRepository;
+		this.hashtagRepository = hashtagRepository;
+		this.hashtagMapper = hashtagMapper;
 
 	public List<UzerDto> index() {
 		List<UzerDto> dtos = uzerRepository.findAll().stream().map(uzerMapper::toUzerDto).collect(Collectors.toList());
@@ -89,7 +96,10 @@ public class UzerService {
 	}
 
 	public UzerDto post(UzerPatchWrapperDto dto) {
-		// check if username is available
+		if (available(dto.getCreds().getUsername()) == false)
+		{
+			return new UzerDto(USERNAMENOTAVAILABLE);
+		}
 
 		Uzer newUzer = uzerMapper.toNewUzer(dto.getProfile(), dto.getCreds());
 
